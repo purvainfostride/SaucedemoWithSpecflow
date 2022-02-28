@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="BoDi" version="1.5.0" targetFramework="net472" />
+  <package id="Gherkin" version="22.0.0" targetFramework="net472" />
+  <package id="NUnit" version="3.13.2" targetFramework="net472" />
+  <package id="NUnit3TestAdapter" version="4.2.1" targetFramework="net472" />
+  <package id="SpecFlow" version="2.3.2" targetFramework="net472" />
+  <package id="SpecFlow.NUnit" version="2.3.2" targetFramework="net472" />
+  <package id="SpecFlow.Tools.MsBuild.Generation" version="2.3.2" targetFramework="net472" />
+
+<packages>
+  <package id="BoDi" version="1.5.0" targetFramework="net472" />
+  <package id="Gherkin" version="22.0.0" targetFramework="net472" />
+  <package id="NUnit" version="3.13.2" targetFramework="net472" />
+  <package id="NUnit3TestAdapter" version="4.2.1" targetFramework="net472" />
+  <package id="Selenium.WebDriver" version="4.1.0" targetFramework="net472" />
+  <package id="Selenium.WebDriver.ChromeDriver" version="98.0.4758.10200" targetFramework="net472" />
+  <package id="SpecFlow" version="2.3.2" targetFramework="net472" />
+  <package id="SpecFlow.NUnit" version="2.3.2" targetFramework="net472" />
+  <package id="SpecFlow.Tools.MsBuild.Generation" version="2.3.2" targetFramework="net472" />
+</packa
+</packages>
+
+https://opensource-demo.orangehrmlive.com/index.php/auth/login
+
+using OpenQA.Selenium;
+using System;
+using OpenQA.Selenium.Chrome;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TechTalk.SpecFlow;
+
+
+namespace SauceDemoWithBDD.StepDefinations
+{   [Binding]
+    public class LoginPageStepDefinations
+    {
+        public static IWebDriver driver;
+       
+        [Given(@"User Launched the browser")]
+        public void GivenUserLaunchedTheBrowser()
+        {
+            driver = new ChromeDriver();
+        }
+
+        [Then(@"User Navigated to Login Page of the Application")]
+        public void ThenUserNavigatedToLoginPageOfTheApplication()
+        {
+            driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/index.php/auth/login");
+        }
+
+    }
+}
+
+Feature: Checking Login functionality of the Application
+
+A short summary of the feature
+
+@tag1
+Scenario: To check whether user is on Login Page
+	Given User Launched the browser
+	Then User Navigated to Login Page of the Application
+	
+
+Fixed the issue- dependency versions
+
+(Data Tables and examples) in c#/ findby nd pom
+Invalidcred
+parameterize xpath
+private-protected
+User journey -Asssertion to be correct
+
+reusability nd menatability in login page by using whenwhen nd inclding assertion 
+too
+
+When user enters username and password in the textfield
+	And user clicks on the Login button
+	Then user is on Homepage
+
+        [When(@"user enters username and password in the textfield")]
+        [When(@"user clicks on the Login button")]
+        [Then(@"user is on Homepage")]
+        public void LoginiSteps()
+        {
+            Console.WriteLine("j");
+        }
+
+
+
+
+Feature: Checking functionality of LoginPage of the Application
+
+A short summary of the feature
+
+@validLogincredentials
+#Scenario Outline: Checking Login functionality with the valid login credentials
+	#Given user is on Login page
+	#When user enters <username> and <password> in the textfield
+	#And user clicks on the Login button
+	#Then user is on Homepage
+	#Examples: 
+	#| username		 | password |
+	#| standard_user	 | secret_sauce |
+
+Scenario:Checking Login functionality with the valid login credentials
+	Given user is on Login page
+	When user enters username and password in the textfield
+	And user clicks on the Login button
+	Then user is on Homepage
+
+	#HOMEPAGEEE......
+Scenario: Checking the functionality of Side Menu button
+	Given user loggedin to the Application
+	When user click on Side Menu button
+	And It displays the side menu 
+using System;
+using TechTalk.SpecFlow;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using WebDriverManager.DriverConfigs.Impl;
+using saucedemoFinal.Pages;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
+
+namespace saucedemoFinal.Pages
+{
+    public class LoginPage:BasePage
+    {
+        public LoginPage lp;
+        [FindsBy(How = How.Id, Using = "user-name")] public WebElement Username;
+        [FindsBy(How = How.Id, Using = "password")] public WebElement Userpass;
+        [FindsBy(How = How.Id, Using = "login-button")] public WebElement LoginBtn;
+
+        [FindsBy(How = How.Id, Using = "react-burger-menu-btn")] public WebElement SideMenuBtn;
+        
+        public LoginPage()
+        {
+
+            lp = new LoginPage();
+            PageFactory.InitElements(driver, lp);
+        }
+        public void EnteringLoginCredentials()
+        {
+
+            lp.Username.SendKeys("standard_user");
+            lp.Userpass.SendKeys("secret_sauce");          
+        }
+        public void UserLoggedinSuccessfully()
+        {
+
+            lp.LoginBtn.Click();
+            Assert.AreEqual(homePageURL, driver.Url);
+            
+        }
+        //HOMEPAGE.........................
+        public void SideMenuBtnIsDisplaying() {
+            
+            SideMenuBtn.Click();
+
+        }
+
+    }
+}
+
+
+using System;
+using TechTalk.SpecFlow;
+using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using WebDriverManager.DriverConfigs.Impl;
+using saucedemoFinal.Pages;
+namespace saucedemoFinal.StepDefinitions
+{
+    [Binding]
+    public class LoginPageStepDefinitions:BasePage
+    {
+        [Given(@"user is on Login page")]
+        
+        public void ToCheckWhetherUserLaunchedTheBrowser()
+        {
+            BasePage bp = new BasePage();
+            bp.Setup();                
+        }
+             
+        [When(@"user enters username and password in the textfield")]
+        
+        public void ValidatingLoginCredentials()
+        {
+            LoginPage lp = new LoginPage();
+            lp.EnteringLoginCredentials( );
+        }
+        [When(@"user clicks on the Login button")]
+        [Then(@"user is on Homepage")]
+        public void ToCheckWhetherUserLogginSuccessfully()
+        {
+            LoginPage lp = new LoginPage();
+            lp.UserLoggedinSuccessfully();
+        }
+
+        //HOMEPAGE....................................................
+        [Given(@"user loggedin to the Application")]
+        
+        [When(@"user click on Side Menu button")]
+        [When(@"It displays the side menu")]
+        public void ToCheckWhetherSideMenuBtnIsDisplaying()
+        {
+            LoginPage lp = new LoginPage();
+            lp.SideMenuBtnIsDisplaying();
+        }
+
+       
+       
+
+
+
+
+
+    }
+}
+
+
+
